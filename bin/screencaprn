@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+pushd $HOME/Desktop/
+
+date=$(date '+%Y\-%m\-%d')
+for file in Screen\ Shot\ ${date}*.png; do
+    echo $file | sed -n 's/^Screen Shot \([0-9]*\-[0-9]*\-[0-9]*\) at \([0-9]*\.[0-9]*\.[0-9]*\) \([AP上下][M午].*\)\.png$/\1 \2 \3/p' | while read -r date time meridiem; do
+        if [[ -n "$date" && -n "$time" && -n "$meridiem" ]]; then
+            mv "$file" "Screenshot_${date}_at_${time}_${meridiem}.png"
+        fi
+    done
+done
+
+popd
+
